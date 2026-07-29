@@ -3,331 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>세포분획법 시뮬레이터</title>
 
 <style>
 body{
-    font-family:sans-serif;
-    background:#f1f5f9;
-    text-align:center;
+    font-family: "Malgun Gothic", sans-serif;
+    background:#f4f7fb;
     margin:0;
-    padding:20px;
+    padding:30px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
 }
 
 .card{
     background:white;
-    border-radius:20px;
-    padding:20px;
-    margin:20px auto;
-    max-width:900px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-.tube{
-    position:relative;
-    width:180px;
-    height:420px;
-    margin:auto;
-    border:5px solid #666;
-    border-radius:0 0 35px 35px;
-    overflow:hidden;
-    background:#dff7ff;
-}
-
-.organelle{
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    width:95px;
-    padding:5px;
-    border-radius:20px;
-    color:white;
-    font-size:13px;
-    transition:all 2s;
-    cursor:pointer;
-}
-
-.nucleus{background:#8b5cf6;}
-.mito{background:#ef4444;}
-.chloro{background:#22c55e;}
-.er{background:#3b82f6;}
-.ribo{background:#6b7280;}
-
-.pellet{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    background:#92400e;
-    transition:height 1s;
-}
-
-.spinner{
-    width:180px;
-    height:180px;
-    border:10px solid #0ea5e9;
-    border-radius:50%;
-    margin:auto;
-    position:relative;
-}
-
-.bar{
-    width:10px;
-    height:80px;
-    background:#0ea5e9;
-    position:absolute;
-    top:40px;
-    left:85px;
-}
-
-.rotating{
-    animation:spin linear infinite;
-}
-
-@keyframes spin{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
-}
-
-button{
-    padding:12px 20px;
-    border:none;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-    cursor:pointer;
-    margin:5px;
-}
-
-.popup{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.5);
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
-
-.popup-content{
-    background:white;
     padding:20px;
     border-radius:15px;
-    width:300px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom:20px;
+}
+
+h1{
+    text-align:center;
+    color:#2c3e50;
+}
+
+.results{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.box{
+    min-height:250px;
+}
+
+.item{
+    padding:10px;
+    margin:8px 0;
+    border-radius:8px;
+    color:white;
+    font-weight:bold;
+}
+
+.nucleus{background:#e74c3c;}
+.mito{background:#f39c12;}
+.lyso{background:#f1c40f;color:black;}
+.er{background:#2ecc71;}
+.ribo{background:#3498db;}
+
+input[type=range]{
+    width:100%;
+}
+
+.speed{
+    font-size:24px;
+    color:#2980b9;
+    font-weight:bold;
 }
 </style>
 </head>
-
 <body>
 
-<h1>🧬 세포분획법 시뮬레이터</h1>
+<div class="container">
+
+<h1>🔬 세포분획법 시뮬레이터</h1>
 
 <div class="card">
-
-<h2>연구 미션</h2>
-
-<p id="mission">
-미토콘드리아만 분리하시오.
-</p>
-
-<p>
-점수 :
-<span id="score">0</span>
-</p>
-
-<button onclick="breakCell()">세포 파쇄</button>
-
+    <h2>원심분리 속도</h2>
+    <div class="speed" id="speedDisplay">1000 × g</div>
+    <input type="range" id="slider"
+           min="500"
+           max="120000"
+           step="500"
+           value="1000">
 </div>
 
-<div class="card">
+<div class="results">
 
-<h2>원심분리기</h2>
+    <div class="card box">
+        <h2>침전된 소기관</h2>
+        <div id="pellet"></div>
+    </div>
 
-<div id="rpmText">RPM : 1000</div>
-
-<input
-type="range"
-min="1"
-max="4"
-value="1"
-id="speedSlider">
-
-<div style="margin-top:20px">
-<div class="spinner" id="spinner">
-<div class="bar"></div>
-</div>
-</div>
+    <div class="card box">
+        <h2>상등액에 남아 있는 소기관</h2>
+        <div id="supernatant"></div>
+    </div>
 
 </div>
 
 <div class="card">
+    <h2>📖 학습 내용</h2>
+    <p>
+        세포를 균질화한 후 원심분리를 하면 크고 무거운 소기관부터
+        침전됩니다.
+    </p>
 
-<h2>시험관</h2>
-
-<div class="tube">
-
-<div id="pellet" class="pellet"></div>
-
-<div class="organelle nucleus" id="nucleus"
-style="top:40px">
-핵
+    <ul>
+        <li>1,000×g : 핵</li>
+        <li>5,000×g : 미토콘드리아</li>
+        <li>10,000×g : 리소좀</li>
+        <li>50,000×g : 소포체 조각</li>
+        <li>100,000×g : 리보솜</li>
+    </ul>
 </div>
 
-<div class="organelle mito" id="mito"
-style="top:110px">
-미토콘드리아
-</div>
-
-<div class="organelle chloro" id="chloro"
-style="top:180px">
-엽록체
-</div>
-
-<div class="organelle er" id="er"
-style="top:250px">
-소포체
-</div>
-
-<div class="organelle ribo" id="ribo"
-style="top:320px">
-리보솜
-</div>
-
-</div>
-
-<br>
-
-<button onclick="centrifuge()">
-원심분리 시작
-</button>
-
-</div>
-
-<div class="popup" id="popup">
-<div class="popup-content">
-<h3 id="popupTitle"></h3>
-<p id="popupText"></p>
-<button onclick="closePopup()">닫기</button>
-</div>
 </div>
 
 <script>
+const organelles = [
+    {name:"핵", threshold:1000, class:"nucleus"},
+    {name:"미토콘드리아", threshold:5000, class:"mito"},
+    {name:"리소좀", threshold:10000, class:"lyso"},
+    {name:"소포체 조각", threshold:50000, class:"er"},
+    {name:"리보솜", threshold:100000, class:"ribo"}
+];
 
-let score = 0;
+const slider = document.getElementById("slider");
+const pellet = document.getElementById("pellet");
+const supernatant = document.getElementById("supernatant");
+const speedDisplay = document.getElementById("speedDisplay");
 
-const descriptions = {
-nucleus:"DNA가 들어있는 가장 큰 소기관",
-mito:"ATP를 생산하는 에너지 공장",
-chloro:"식물세포의 광합성 장소",
-er:"단백질과 지질 운반",
-ribo:"단백질 합성 장소"
-};
+function updateSimulation(){
 
-document.querySelectorAll(".organelle").forEach(el=>{
-el.addEventListener("click",()=>{
+    let speed = Number(slider.value);
 
-let key = el.id;
+    speedDisplay.textContent =
+        speed.toLocaleString() + " × g";
 
-document.getElementById("popupTitle").innerText =
-el.innerText;
+    pellet.innerHTML = "";
+    supernatant.innerHTML = "";
 
-document.getElementById("popupText").innerText =
-descriptions[key];
+    organelles.forEach(org => {
 
-document.getElementById("popup").style.display="flex";
+        let div = document.createElement("div");
+        div.className = "item " + org.class;
+        div.textContent = org.name;
 
-});
-});
-
-function closePopup(){
-document.getElementById("popup").style.display="none";
+        if(speed >= org.threshold){
+            pellet.appendChild(div);
+        }else{
+            supernatant.appendChild(div);
+        }
+    });
 }
 
-function breakCell(){
-
-document.querySelectorAll(".organelle").forEach(el=>{
-
-el.style.left =
-(30+Math.random()*100)+"px";
-
-});
-
-alert("세포가 파쇄되어 소기관이 방출되었습니다!");
-}
-
-const slider =
-document.getElementById("speedSlider");
-
-slider.addEventListener("input",()=>{
-
-const rpm=
-[1000,5000,10000,50000][slider.value-1];
-
-document.getElementById("rpmText").innerText =
-"RPM : "+rpm;
-
-const spinner=
-document.getElementById("spinner");
-
-spinner.classList.add("rotating");
-
-spinner.style.animationDuration=
-(5/slider.value)+"s";
-});
-
-function centrifuge(){
-
-const speed=
-Number(slider.value);
-
-const pellet=
-document.getElementById("pellet");
-
-let pelletHeight=0;
-
-if(speed>=1){
-document.getElementById("nucleus").style.top="360px";
-pelletHeight+=20;
-}
-
-if(speed>=2){
-document.getElementById("mito").style.top="335px";
-document.getElementById("chloro").style.top="310px";
-pelletHeight+=25;
-}
-
-if(speed>=3){
-document.getElementById("er").style.top="285px";
-pelletHeight+=20;
-}
-
-if(speed>=4){
-document.getElementById("ribo").style.top="260px";
-pelletHeight+=20;
-}
-
-pellet.style.height=
-pelletHeight+"px";
-
-checkMission(speed);
-}
-
-function checkMission(speed){
-
-if(speed===2){
-
-score+=10;
-
-document.getElementById("score").innerText=
-score;
-
-alert("성공! 미토콘드리아를 분리했습니다. +10점");
-
-}else{
-
-alert("실패! 다시 시도해 보세요.");
-}
-
-}
+slider.addEventListener("input", updateSimulation);
+updateSimulation();
 </script>
 
 </body>
