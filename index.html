@@ -1,160 +1,148 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>세포분획법 시뮬레이터</title>
 
-<style>
-body{
-    font-family: "Malgun Gothic", sans-serif;
-    background:#f4f7fb;
-    margin:0;
-    padding:30px;
-}
+<title>캘빈의 광합성 실험</title>
 
-.container{
-    max-width:900px;
-    margin:auto;
-}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-.card{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    margin-bottom:20px;
-}
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
-h1{
-    text-align:center;
-    color:#2c3e50;
-}
+<link rel="stylesheet" href="style.css">
 
-.results{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-}
-
-.box{
-    min-height:250px;
-}
-
-.item{
-    padding:10px;
-    margin:8px 0;
-    border-radius:8px;
-    color:white;
-    font-weight:bold;
-}
-
-.nucleus{background:#e74c3c;}
-.mito{background:#f39c12;}
-.lyso{background:#f1c40f;color:black;}
-.er{background:#2ecc71;}
-.ribo{background:#3498db;}
-
-input[type=range]{
-    width:100%;
-}
-
-.speed{
-    font-size:24px;
-    color:#2980b9;
-    font-weight:bold;
-}
-</style>
 </head>
+
 <body>
+<!-- =========================
+     INTRO
+========================= -->
 
-<div class="container">
+<div id="intro">
 
-<h1>🔬 세포분획법 시뮬레이터</h1>
+    <div class="intro-card">
 
-<div class="card">
-    <h2>원심분리 속도</h2>
-    <div class="speed" id="speedDisplay">1000 × g</div>
-    <input type="range" id="slider"
-           min="500"
-           max="120000"
-           step="500"
-           value="1000">
+        <h2>종이 크로마토그래피</h2>
+
+        <p class="intro-text">
+            혼합물을 종이에 떨어뜨린 뒤 용매를 흘려 보내면
+            물질마다 이동하는 속도가 달라 서로 분리됩니다.
+        </p>
+
+<div class="student-input">
+    <label for="studentName">이름</label>
+    <input
+        id="studentName"
+        type="text"
+        placeholder="이름을 입력하세요">
 </div>
 
-<div class="results">
+<div class="paper">
+    <div class="rotation-layer">
+        <!-- 원점 -->
+        <div class="origin">
+            <div class="sample"></div>
+        </div>
+        <!-- 1차 전개 용매 -->
+        <div class="solvent first"></div>
+        <!-- 1차 전개 후 분리된 물질 -->
+        <div class="first-spot spot-a"></div>
+        <div class="first-spot spot-b"></div>
+        <div class="first-spot spot-c"></div>
+        <!-- 2차 전개 용매 -->
+        <div class="solvent second"></div>
+        <!-- 최종 분리된 물질 -->
+        <div class="final-spot final-a"></div>
+        <div class="final-spot final-b"></div>
+        <div class="final-spot final-c"></div>
+        <div class="final-spot final-d"></div>
+    </div>
+</div>
+        <p id="intro-caption">
+            시료를 종이 아래쪽에 떨어뜨립니다.
+        </p>
 
-    <div class="card box">
-        <h2>침전된 소기관</h2>
-        <div id="pellet"></div>
+        <button id="startBtn" hidden>
+            실험 시작
+        </button>
+
     </div>
 
-    <div class="card box">
-        <h2>상등액에 남아 있는 소기관</h2>
-        <div id="supernatant"></div>
-    </div>
+</div>
+<div class="container hidden">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <h1>캘빈의 광합성 실험</h1>
+
+        <p class="subtitle">
+            검은 점은 방사성 탄소(<sup>14</sup>C)가 검출된 물질을 나타냅니다. 시간에 따라 방사성 탄소가 어떤 물질로 이동하는지 관찰해 보세요.
+        </p>
+
+    </header>
+
+
+    <!-- =========================
+         TIME TAB
+    ========================== -->
+
+    <nav class="time-tabs" aria-label="시간 선택">
+
+        <button
+            type="button"
+            class="time-tab active"
+            data-step="3s">
+
+            광합성 3초 후
+
+        </button>
+
+        <button
+            type="button"
+            class="time-tab"
+            data-step="30s">
+
+            광합성 30초 후
+
+        </button>
+
+    </nav>
+
+
+<main>
+    <section class="film-section">
+        <div id="film" aria-label="광합성 실험 오토라디오그램"></div>
+    </section>
+
+    <section class="quiz-section">
+        <h3>탐구 퀴즈</h3>
+        <p id="quiz-progress"></p>
+
+        <div id="quiz-question"></div>
+        <div id="quiz-options"></div>
+
+        <p id="quiz-feedback"></p>
+
+        <div class="quiz-nav">
+            <button id="quizNextBtn" type="button">다음 문제</button>
+        </div>
+    </section>
+</main>
+
+
 
 </div>
 
-<div class="card">
-    <h2>📖 학습 내용</h2>
-    <p>
-        세포를 균질화한 후 원심분리를 하면 크고 무거운 소기관부터
-        침전됩니다.
-    </p>
-
-    <ul>
-        <li>1,000×g : 핵</li>
-        <li>5,000×g : 미토콘드리아</li>
-        <li>10,000×g : 리소좀</li>
-        <li>50,000×g : 소포체 조각</li>
-        <li>100,000×g : 리보솜</li>
-    </ul>
-</div>
-
-</div>
-
-<script>
-const organelles = [
-    {name:"핵", threshold:1000, class:"nucleus"},
-    {name:"미토콘드리아", threshold:5000, class:"mito"},
-    {name:"리소좀", threshold:10000, class:"lyso"},
-    {name:"소포체 조각", threshold:50000, class:"er"},
-    {name:"리보솜", threshold:100000, class:"ribo"}
-];
-
-const slider = document.getElementById("slider");
-const pellet = document.getElementById("pellet");
-const supernatant = document.getElementById("supernatant");
-const speedDisplay = document.getElementById("speedDisplay");
-
-function updateSimulation(){
-
-    let speed = Number(slider.value);
-
-    speedDisplay.textContent =
-        speed.toLocaleString() + " × g";
-
-    pellet.innerHTML = "";
-    supernatant.innerHTML = "";
-
-    organelles.forEach(org => {
-
-        let div = document.createElement("div");
-        div.className = "item " + org.class;
-        div.textContent = org.name;
-
-        if(speed >= org.threshold){
-            pellet.appendChild(div);
-        }else{
-            supernatant.appendChild(div);
-        }
-    });
-}
-
-slider.addEventListener("input", updateSimulation);
-updateSimulation();
-</script>
+<script src="script.js"></script>
 
 </body>
+
 </html>
