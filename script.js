@@ -591,18 +591,18 @@ const quizQuestions = [
 {
     question:
     "30초 후 오토라디오그램에서 3초 후보다 방사성 탄소가 검출되는 물질의 종류가 많아진 이유를 쓰시오.",
+    type:"text",
     answer:"시간이 지나면서 방사성 탄소가 여러 물질로 이동했기 때문이다.",
     explain:
-    "시간이 지날수록 3PG에 고정된 탄소가 PGAL, 당류, 아미노산 등 다양한 물질로 전달되기 때문입니다.",
-    type:"text"
+    "시간이 지날수록 3PG에 고정된 탄소가 PGAL, 당류, 아미노산 등 다양한 물질로 전달되기 때문입니다."
 },
 {
     question:
-    "캘빈의 방사성 동위원소 추적 실험이 밝혀낸 내용을 쓰시오.",
+    "이 실험(캘빈의 방사성 동위원소 추적 실험)이 보여 주는 것은 무엇인지 쓰시오.",
+    type:"text",
     answer:"캘빈 회로에서 탄소가 고정되어 여러 물질로 이동하는 경로",
     explain:
-    "캘빈은 시간에 따라 방사성 탄소가 검출되는 물질을 추적해 탄소 이동 경로를 밝혀냈습니다.",
-    type:"text"
+    "캘빈은 시간에 따라 방사성 탄소가 검출되는 물질을 추적해 탄소 이동 경로를 밝혀냈습니다."
 }
 ];
 
@@ -633,6 +633,26 @@ function renderQuiz(){
     quizNextBtn.textContent =
         (quizIndex === quizQuestions.length - 1) ? "처음으로" : "다음 문제";
 
+if(q.type === "text"){
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "textAnswer";
+    input.placeholder = "답을 입력하세요.";
+
+    quizOptionsEl.appendChild(input);
+
+    const btn = document.createElement("button");
+    btn.textContent = "확인";
+    btn.type = "button";
+
+    btn.addEventListener("click",checkTextAnswer);
+
+    quizOptionsEl.appendChild(btn);
+
+}
+else{
+
     q.options.forEach((optionText,i)=>{
 
         const btn = document.createElement("button");
@@ -648,6 +668,7 @@ function renderQuiz(){
 
     });
 
+}
 }
 
 function selectQuizAnswer(selectedIndex){
@@ -688,6 +709,30 @@ if(quizIndex === quizQuestions.length - 1){
     submitBtn.hidden = false;
 
 }
+
+}
+
+function checkTextAnswer(){
+
+    const q = quizQuestions[quizIndex];
+
+    const input = document.getElementById("textAnswer").value.trim();
+
+    quizAnswers[quizIndex] = {
+        question:q.question,
+        selected:input,
+        correct:q.answer,
+        isCorrect:false
+    };
+
+    quizFeedbackEl.textContent =
+        "답이 저장되었습니다. " + q.explain;
+
+    quizNextBtn.disabled = false;
+
+    if(quizIndex === quizQuestions.length - 1){
+        submitBtn.hidden = false;
+    }
 
 }
 
