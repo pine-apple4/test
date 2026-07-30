@@ -662,13 +662,15 @@ function renderQuiz(){
 function selectQuizAnswer(selectedIndex){
 
     const q = quizQuestions[quizIndex];
-    const optionButtons = quizOptionsEl.que
+
     quizAnswers[quizIndex] = {
         question: q.question,
         selected: q.options[selectedIndex],
         correct: q.options[q.answer],
         isCorrect: selectedIndex === q.answer
-    };rySelectorAll(".quiz-option");
+    };
+
+    const optionButtons = quizOptionsEl.querySelectorAll(".quiz-option");
 
     optionButtons.forEach((btn,i)=>{
 
@@ -722,7 +724,7 @@ submitBtn.addEventListener("click",()=>{
     };
 
 
-    fetch("https://script.google.com/macros/s/AKfycbxDSA5MX9KYqx23-wbPP6UOnj4b5zHkZs6dt7fNdyMcVR-MorqcudkUpCN4m_mr_rDM/exec",{
+    fetch("여기에_Apps_Script_URL",{
 
         method:"POST",
 
