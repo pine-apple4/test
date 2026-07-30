@@ -1,0 +1,905 @@
+/* =========================================
+   INTRO
+========================================= */
+
+.hidden{
+    display:none;
+}
+
+#intro{
+
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#eef4f8;
+
+    z-index:9999;
+
+}
+
+.intro-card{
+
+    width:min(700px,92%);
+    padding:40px;
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+    text-align:center;
+
+}
+
+.intro-card h2{
+
+    margin:0 0 15px;
+
+    font-size:30px;
+
+}
+
+.intro-text{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    margin-bottom:35px;
+
+}
+
+
+/* =========================================
+   PAPER
+========================================= */
+
+/* =========================================
+   INTRO : TWO DIMENSIONAL CHROMATOGRAPHY
+========================================= */
+
+.hidden{
+    display:none;
+}
+
+
+#intro{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#eef4f8;
+
+    z-index:9999;
+
+}
+
+
+
+.intro-card{
+
+    width:min(700px,92%);
+
+    padding:40px;
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.12);
+
+    text-align:center;
+
+}
+
+
+
+.intro-card h2{
+
+    margin:0 0 15px;
+
+    font-size:30px;
+
+}
+
+
+
+.intro-text{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+
+}
+
+
+
+/* =========================================
+   PAPER
+========================================= */
+
+.paper{
+    position:relative;
+    width:300px;
+    height:300px;
+    margin:30px auto;
+    background:white;
+    border:2px solid #444;
+    overflow:hidden;
+}
+
+/* 종이 전체(원점+1차+2차)를 통째로 회전시키는 레이어 */
+.rotation-layer{
+    position:absolute;
+    inset:0;
+    transform-origin:50% 50%;
+    transition:transform 1.5s ease;
+}
+
+/* 원점 */
+.origin{
+    position:absolute;
+    left:30px;
+    bottom:30px;
+}
+
+.sample{
+    width:12px;
+    height:12px;
+    background:#111;
+    border-radius:50%;
+}
+
+/* =========================================
+   FIRST DEVELOPMENT (가로 방향 전개)
+========================================= */
+
+.solvent.first{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:0;
+    height:100%;
+    background:rgba(125,211,252,.35);
+}
+
+.first-spot{
+    position:absolute;
+    width:12px;
+    height:12px;
+    background:#111;
+    border-radius:50%;
+    opacity:0;
+    left:30px;
+    bottom:30px;
+    transition:
+        left 2.7s linear 0.3s,   /* 0.3s 대기 후 2.7s 동안 이동 */
+        opacity .3s;
+}
+
+.spot-a.moved{ left:110px; }
+.spot-b.moved{ left:160px; }
+.spot-c.moved{ left:220px; }
+
+/* =========================================
+   SECOND DEVELOPMENT (세로 방향 전개, 회전 후 적용)
+========================================= */
+
+.solvent.second{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:0;
+    background:rgba(125,211,252,.35);
+}
+
+.final-spot{
+    position:absolute;
+    width:14px;
+    height:14px;
+    background:#111;
+    border-radius:50%;
+    opacity:0;
+    bottom:30px;
+    transition:
+        bottom 2.7s linear 0.3s,
+        opacity .3s;
+}
+
+.final-a{ left:110px; }
+.final-b{ left:110px; }
+.final-c{ left:160px; }
+.final-d{ left:220px; }
+
+.final-a.moved{ bottom:110px; }
+.final-b.moved{ bottom:220px; }
+.final-c.moved{ bottom:160px; }
+.final-d.moved{ bottom:85px; }
+
+/* =========================================
+   CAPTION / BUTTON
+========================================= */
+
+
+#intro-caption{
+
+    min-height:30px;
+
+    margin:20px 0;
+
+    color:#334155;
+
+}
+
+
+
+#startBtn{
+
+    padding:12px 30px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+
+#startBtn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+
+#intro.fade-out{
+
+    animation:introFade .8s forwards;
+
+}
+
+
+
+@keyframes introFade{
+
+    to{
+
+        opacity:0;
+
+        visibility:hidden;
+
+    }
+
+}
+
+/* 설명 */
+
+#intro-caption{
+
+    min-height:30px;
+
+    margin:10px 0 25px;
+
+    color:#334155;
+
+    font-size:16px;
+
+}
+
+
+/* 버튼 */
+
+#startBtn{
+
+    padding:12px 30px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+#startBtn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+
+}
+
+
+/* 페이드아웃 */
+
+#intro.fade-out{
+
+    animation:introFade .8s forwards;
+
+}
+
+@keyframes introFade{
+
+    to{
+
+        opacity:0;
+        visibility:hidden;
+
+    }
+
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+
+    box-sizing:border-box;
+
+}
+
+
+body {
+
+    margin:0;
+
+    font-family:"Noto Sans KR", sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef4f8,
+            #f8fafc
+        );
+
+    color:#1f2937;
+
+}
+
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.container {
+
+    width:min(1000px,95%);
+
+    margin:50px auto;
+
+}
+
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+
+h1 {
+
+    margin:0 0 12px;
+
+    font-size:32px;
+
+    letter-spacing:-1px;
+
+}
+
+
+.subtitle {
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    margin:0;
+
+}
+
+
+
+/* =========================================
+   TIME TAB
+========================================= */
+
+.time-tabs {
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+.time-tab {
+
+    padding:12px 28px;
+
+    border:1px solid #cbd5e1;
+
+    background:white;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    color:#334155;
+
+    transition:.25s;
+
+}
+
+
+
+.time-tab:hover {
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.08);
+
+}
+
+
+
+.time-tab.active {
+
+    background:#2563eb;
+
+    color:white;
+
+    border-color:#2563eb;
+
+    box-shadow:
+
+        0 8px 20px rgba(37,99,235,.25);
+
+}
+
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+main {
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+}
+
+
+
+/* =========================================
+   FILM
+========================================= */
+
+.film-section {
+
+    flex-shrink:0;
+
+}
+
+
+
+.film-title {
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+
+.film-title h2 {
+
+    margin:0 0 8px;
+
+    font-size:20px;
+
+}
+
+
+
+.film-title p {
+
+    margin:0;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+
+
+/* =========================================
+   RADIOGRAPH FILM
+========================================= */
+
+/* =========================================
+   RADIOGRAPH FILM
+========================================= */
+
+#film {
+
+    width:420px;
+
+    height:500px;
+
+    position:relative;
+
+
+    background:#ffffff;
+
+
+    border:1px solid #999;
+
+    border-radius:0;
+
+
+    box-shadow:
+
+        0 8px 20px rgba(0,0,0,.12);
+
+
+    overflow:hidden;
+
+}
+
+
+
+/* 필름 질감 */
+
+#film::before {
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.08) 1px,
+            transparent 1px
+        );
+
+
+    background-size:8px 8px;
+
+    opacity:.15;
+
+    pointer-events:none;
+
+}
+
+
+
+/* =========================================
+   SPOT
+========================================= */
+
+.spot {
+
+    position:absolute;
+
+    border-radius:50%;
+
+
+    background:#111;
+
+
+    transform:
+        translate(-50%,-50%);
+
+
+    transition:
+
+        left .4s ease,
+
+        top .4s ease,
+
+        width .4s ease,
+
+        height .4s ease,
+
+        opacity .4s ease;
+
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.spot-label {
+
+    position:absolute;
+
+    top:110%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:12px;
+
+    color:#222;
+
+    white-space:nowrap;
+
+    pointer-events:none;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.tip {
+
+    margin-top:40px;
+
+    padding:25px 30px;
+
+
+    background:white;
+
+
+    border-radius:16px;
+
+
+    box-shadow:
+
+        0 8px 25px rgba(15,23,42,.08);
+
+}
+
+
+
+.tip h3 {
+
+    margin-top:0;
+
+    color:#2563eb;
+
+}
+
+
+
+.tip li {
+
+    margin-bottom:12px;
+
+    line-height:1.6;
+
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:800px){
+
+
+    main {
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+
+
+    #film {
+
+        width:90vw;
+
+        height:110vw;
+
+        max-height:650px;
+
+    }
+
+
+
+    h1 {
+
+        font-size:26px;
+
+    }
+
+
+}
+
+/* =========================================
+   QUIZ
+========================================= */
+
+.quiz-section{
+    width:360px;
+    margin-left:30px;
+    padding:25px 28px;
+    background:white;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(15,23,42,.08);
+    align-self:flex-start;
+}
+
+.quiz-section h3{
+    margin-top:0;
+    color:#2563eb;
+}
+
+#quiz-progress{
+    font-size:13px;
+    color:#94a3b8;
+    margin:0 0 15px;
+}
+
+#quiz-question{
+    font-size:16px;
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+#quiz-options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.quiz-option{
+    padding:12px 16px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    background:white;
+    text-align:left;
+    cursor:pointer;
+    font-size:14px;
+    color:#334155;
+    transition:.2s;
+}
+
+.quiz-option:hover{
+    border-color:#2563eb;
+}
+
+.quiz-option.correct{
+    background:#dcfce7;
+    border-color:#22c55e;
+    color:#15803d;
+}
+
+.quiz-option.wrong{
+    background:#fee2e2;
+    border-color:#ef4444;
+    color:#b91c1c;
+}
+
+.quiz-option:disabled{
+    cursor:default;
+}
+
+#quiz-feedback{
+    min-height:22px;
+    font-size:14px;
+    color:#334155;
+}
+
+.quiz-nav{
+    text-align:right;
+}
+
+#quizNextBtn{
+    padding:10px 22px;
+    border:none;
+    border-radius:30px;
+    background:#2563eb;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+#quizNextBtn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+#quizNextBtn:disabled{
+    background:#cbd5e1;
+    cursor:default;
+    transform:none;
+    box-shadow:none;
+}
+
+@media(max-width:800px){
+
+    .quiz-section{
+        width:90vw;
+        margin-left:0;
+        margin-top:25px;
+    }
+
+}
+
+.student-input{
+    margin:20px 0;
+}
+
+.student-input label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.student-input input{
+    width:220px;
+    padding:10px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:16px;
+}
