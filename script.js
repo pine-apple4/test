@@ -623,6 +623,7 @@ const quizOptionsEl = document.getElementById("quiz-options");
 const quizFeedbackEl = document.getElementById("quiz-feedback");
 const quizProgressEl = document.getElementById("quiz-progress");
 const quizNextBtn = document.getElementById("quizNextBtn");
+const submitBtn = document.getElementById("submitBtn");
 
 renderQuiz();
 
@@ -692,6 +693,12 @@ function selectQuizAnswer(selectedIndex){
 
     quizNextBtn.disabled = false;
 
+if(quizIndex === quizQuestions.length - 1){
+
+    submitBtn.hidden = false;
+
+}
+
 }
 
 quizNextBtn.addEventListener("click",()=>{
@@ -703,7 +710,7 @@ quizNextBtn.addEventListener("click",()=>{
 
 
 
-const submitBtn = document.getElementById("submitBtn");
+
 
 
 submitBtn.addEventListener("click",()=>{
