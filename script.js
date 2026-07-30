@@ -209,6 +209,7 @@ let currentStep = "3s";
 let selectedSpot = null;
 let studentName = "";
 
+let quizAnswers = [];
 
 /* =========================================
    DATA
@@ -661,7 +662,13 @@ function renderQuiz(){
 function selectQuizAnswer(selectedIndex){
 
     const q = quizQuestions[quizIndex];
-    const optionButtons = quizOptionsEl.querySelectorAll(".quiz-option");
+    const optionButtons = quizOptionsEl.que
+    quizAnswers[quizIndex] = {
+        question: q.question,
+        selected: q.options[selectedIndex],
+        correct: q.options[q.answer],
+        isCorrect: selectedIndex === q.answer
+    };rySelectorAll(".quiz-option");
 
     optionButtons.forEach((btn,i)=>{
 
@@ -692,39 +699,41 @@ quizNextBtn.addEventListener("click",()=>{
 
 });
 
-const replayBtn = document.getElementById("replayBtn");
 
-replayBtn.addEventListener("click",()=>{
 
-    startChromatography();
+const submitBtn = document.getElementById("submitBtn");
 
-});
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbz3gslOzheRYPa1xWz1zpfUdT--Gj91djNEpAh4uxkpjBbzNTTGz8lI3dzAjo53k4E/exec";
+submitBtn.addEventListener("click",()=>{
 
-const nameInput = document.getElementById("studentName");
 
-document.getElementById("startBtn").addEventListener("click", () => {
-
-    const name = nameInput.value.trim();
-
-    if(name === ""){
-        alert("이름을 입력하세요.");
+    if(studentName === ""){
+        alert("이름이 없습니다.");
         return;
     }
 
 
-    fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({
-            name: name
-        })
+    const data = {
+
+        name: studentName,
+
+        answers: quizAnswers
+
+    };
+
+
+    fetch("여기에_Apps_Script_URL",{
+
+        method:"POST",
+
+        body:JSON.stringify(data)
+
     })
-    .then(() => {
-        console.log("저장 완료");
-    })
-    .catch(error => {
-        console.error(error);
+    .then(()=>{
+
+        alert("답안이 제출되었습니다.");
+
     });
+
 
 });
