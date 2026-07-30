@@ -735,7 +735,7 @@ submitBtn.addEventListener("click",()=>{
 
         method:"POST",
 
-        body:JSON.stringify(data)
+        body:JSON.stringify(data.answers)
 
     })
     .then(()=>{
