@@ -722,7 +722,7 @@ submitBtn.addEventListener("click",()=>{
     };
 
 
-    fetch("여기에_Apps_Script_URL",{
+    fetch("https://script.google.com/macros/s/AKfycbxDSA5MX9KYqx23-wbPP6UOnj4b5zHkZs6dt7fNdyMcVR-MorqcudkUpCN4m_mr_rDM/exec",{
 
         method:"POST",
 
